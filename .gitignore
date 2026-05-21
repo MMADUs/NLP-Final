@@ -2,3 +2,5 @@ results
 dataset
 glove
 archive.zip
+.vscode
+__pycache__
