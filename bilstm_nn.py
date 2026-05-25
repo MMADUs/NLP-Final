@@ -6,11 +6,6 @@ from torch.nn.utils.rnn import pack_padded_sequence
 PAD_IDX = 0
 
 
-def tokenize_function(text):
-    text = text.lower()
-    return re.findall(r"[a-z0-9]+(?:'[a-z]+)?", text)
-
-
 class BiLSTMClassifier(nn.Module):
     def __init__(
         self,

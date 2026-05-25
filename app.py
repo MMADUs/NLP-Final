@@ -83,36 +83,6 @@ st.markdown(
         margin-bottom: 0.5rem;
     }
 
-    .tweet-preview {
-        border: 1px solid #e5e7eb;
-        background-color: #ffffff;
-        border-radius: 16px;
-        padding: 1.1rem 1.25rem;
-        margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .tweet-user {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #111827;
-        margin-bottom: 0.1rem;
-    }
-
-    .tweet-handle {
-        font-size: 0.82rem;
-        color: #9ca3af;
-        margin-bottom: 0.75rem;
-    }
-
-    .tweet-content {
-        font-size: 0.95rem;
-        color: #374151;
-        line-height: 1.65;
-        white-space: pre-wrap;
-        word-break: break-word;
-    }
-
     .result-card {
         background-color: #ffffff;
         border: 1px solid #e5e7eb;
@@ -336,11 +306,12 @@ def get_class_css(predicted_class: str):
 
 
 st.markdown(
-    '<div class="app-title">Tweet Safety Classifier</div>', unsafe_allow_html=True
+    '<div class="app-title">What do you want to share today?</div>',
+    unsafe_allow_html=True,
 )
 
 st.markdown(
-    '<div class="app-subtitle">Classify tweet-like text as hate, offensive, or neither before posting.</div>',
+    '<div class="app-subtitle">Analyze your content posts descriptions as hate, offensive, or neither before posting.</div>',
     unsafe_allow_html=True,
 )
 
@@ -352,53 +323,38 @@ selected_model = st.selectbox(
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-st.markdown('<div class="section-label">Compose Tweet</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-label">Compose Content</div>', unsafe_allow_html=True)
 
 tweet_text = st.text_area(
     label="Tweet content",
     placeholder="What is happening?",
     height=160,
-    max_chars=280,
     label_visibility="collapsed",
 )
 
 char_count = len(tweet_text)
 
 
+char_count = len(tweet_text)
+
 st.markdown(
     f"""
-        <div style="color:#9ca3af; font-size:0.85rem; padding-top:0.9rem; padding-bottom:0.9rem;">
-            {char_count}/280 characters
-        </div>
-        """,
+    <div style="color:#9ca3af; font-size:0.85rem; padding-top:0.9rem; padding-bottom:0.9rem;">
+        {char_count} characters
+    </div>
+    """,
     unsafe_allow_html=True,
 )
 
 
 analyze_button = st.button("Analyze Post")
 
-if tweet_text.strip():
-    safe_tweet_text = html.escape(tweet_text)
-
-    st.markdown(
-        f"""
-        <div class="tweet-preview">
-            <div class="tweet-user">Muhammad Nizwa</div>
-            <div class="tweet-handle">@m.nizwa01</div>
-            <div class="tweet-content">{safe_tweet_text}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
 if analyze_button:
     if not tweet_text.strip():
         st.warning("Please write a tweet before analyzing.")
     else:
         # inference
-        output = predict_text(
-            tweet_text, selected_model
-        )
+        output = predict_text(tweet_text, selected_model)
 
         predicted_class = output["label"]
         predicted_probability = output["score"]

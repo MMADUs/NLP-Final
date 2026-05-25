@@ -5,7 +5,8 @@ import torch
 
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 
-from bi_lstm import BiLSTMClassifier, tokenize_function
+from bilstm_nn import BiLSTMClassifier
+from preprocessing import tokenize_function
 
 MODEL_OPTIONS = [
     "Naive Bayes",
@@ -59,7 +60,7 @@ class MLModels:
 
 
 class BiLSTM:
-    UNK_IDX = 0
+    UNK_IDX = 1
     MAX_LEN = 256
 
     def __init__(self):
