@@ -137,7 +137,7 @@ class TransformerModel:
                 output_path = "./results/roberta"
             else:
                 # huggingface model hub address
-                output_path = "roberta-base"
+                output_path = "MMADUs/NLP-Final-RoBERTa"
         else:
             raise ValueError(f"no model {model_str}")
 
