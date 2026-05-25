@@ -121,11 +121,23 @@ class BiLSTM:
 
 
 class TransformerModel:
-    def __init__(self, model_str):
+    def __init__(self, model_str, is_local):
+        # minilm
         if model_str == "minilm":
-            output_path = "./results/mini_lm"
+            if is_local:
+                # locala dir path
+                output_path = "./results/mini_lm"
+            else:
+                # huggingface model hub address
+                output_path = "MMADUs/NLP-Final-MiniLM"
+        # roberta
         elif model_str == "roberta":
-            output_path = "./results/roberta"
+            if is_local:
+                # locala dir path
+                output_path = "./results/roberta"
+            else:
+                # huggingface model hub address
+                output_path = "roberta-base"
         else:
             raise ValueError(f"no model {model_str}")
 
@@ -162,12 +174,14 @@ class TransformerModel:
 
 # Load to memory
 
+is_transformers_local = False
+
 MODELS = {
     "Naive Bayes": MLModels(model_str="nb"),
     "SVM": MLModels(model_str="svm"),
     "BiLSTM": BiLSTM(),
-    "MiniLM L12": TransformerModel(model_str="minilm"),
-    "RoBERTa": TransformerModel(model_str="roberta"),
+    "MiniLM L12": TransformerModel(model_str="minilm", is_local=is_transformers_local),
+    "RoBERTa": TransformerModel(model_str="roberta", is_local=is_transformers_local),
 }
 
 # expected output:
